@@ -31,7 +31,7 @@ class _SplashScreenViewState extends State<SplashScreenView> {
           children: [
             CircleAvatar(
               backgroundColor: Colors.red,
-              maxRadius: 150,
+              maxRadius: 160,
               child: Icon(
                 Icons.person,
                 size: 200,
