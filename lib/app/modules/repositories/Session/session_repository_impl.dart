@@ -7,7 +7,10 @@ class SessionRepositoryImpl implements SessionRepository {
   FirebaseAuth auth;
   FirebaseFirestore db;
 
-  SessionRepositoryImpl({required this.auth, required this.db});
+  SessionRepositoryImpl({
+    required this.auth,
+    required this.db,
+  });
   @override
   loginUser(UserModel userModel) {
     // TODO: implement loginUser
@@ -15,8 +18,12 @@ class SessionRepositoryImpl implements SessionRepository {
   }
 
   @override
-  registerUSer(UserModel userModel) async {
-    await auth.createUserWithEmailAndPassword(
-        email: userModel.email!, password: userModel.password!);
+  Future<void> registerUSer(UserModel userModel) async {
+    try {
+      await auth.createUserWithEmailAndPassword(
+          email: userModel.email!, password: userModel.password!);
+    } catch (error) {
+      throw Exception();
+    }
   }
 }

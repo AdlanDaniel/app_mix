@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:app_mix/app/routes/routes.dart';
 import 'package:flutter/material.dart';
 
 class LoginView extends StatefulWidget {
@@ -100,7 +101,9 @@ class _LoginViewState extends State<LoginView> {
                             shape: MaterialStateProperty.all(
                                 RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(20)))),
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.pushNamed(context, Routes.registerUsers);
+                        },
                         child: Text(
                           'Entrar',
                           style: TextStyle(color: Color(0xFF7C4DFF)),
