@@ -12,9 +12,15 @@ class SessionRepositoryImpl implements SessionRepository {
     required this.db,
   });
   @override
-  loginUser(UserModel userModel) {
+  Future <void> loginUser(UserModel userModel) async{
+    await auth.signInWithEmailAndPassword(
+        email: userModel.email!, password: userModel.password!);
     // TODO: implement loginUser
     throw UnimplementedError();
+  }
+
+  _dataUser(UserModel userModel) {
+    db.collection('Usuários').doc(auth.currentUser!.uid).set(userModel.toMap());
   }
 
   @override
@@ -22,6 +28,16 @@ class SessionRepositoryImpl implements SessionRepository {
     try {
       await auth.createUserWithEmailAndPassword(
           email: userModel.email!, password: userModel.password!);
+      _dataUser(userModel);
+    } catch (error) {
+      throw Exception();
+    }
+  }
+
+  @override
+  Future<void> signOutUser() async {
+    try {
+      await auth.signOut();
     } catch (error) {
       throw Exception();
     }
