@@ -1,3 +1,5 @@
+
+
 import 'package:app_mix/app/modules/repositories/Models/User_model.dart';
 import 'package:app_mix/app/modules/repositories/Session/session_repository.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -12,11 +14,27 @@ class SessionRepositoryImpl implements SessionRepository {
     required this.db,
   });
   @override
-  Future <void> loginUser(UserModel userModel) async{
-    await auth.signInWithEmailAndPassword(
-        email: userModel.email!, password: userModel.password!);
-    // TODO: implement loginUser
-    throw UnimplementedError();
+  Future<void> loginUser(UserModel userModel) async {
+    try {
+      await auth.signInWithEmailAndPassword(
+          email: userModel.email!, password: userModel.password!);
+    } on FirebaseAuthException catch (error) {
+      switch (error.code) {
+        case 'user-not-found':
+          throw UserNotFoundError();
+        case 'invalid-email':
+          throw InvalidEmail();
+        case 'user-disabled':
+          throw UserDiseable();
+        case 'wrong-password':
+          throw WrongPassword();
+
+        default:
+          throw GenericError();
+      }
+    } catch (_) {
+      throw GenericError();
+    }
   }
 
   _dataUser(UserModel userModel) {
@@ -42,4 +60,21 @@ class SessionRepositoryImpl implements SessionRepository {
       throw Exception();
     }
   }
-}
+
+  @override
+  Future<User?> isUserLoaded()async {
+    return auth.currentUser ;
+    }
+    
+  }
+
+
+class UserNotFoundError implements Exception {}
+
+class InvalidEmail implements Exception {}
+
+class UserDiseable implements Exception {}
+
+class WrongPassword implements Exception {}
+
+class GenericError implements Exception {}
