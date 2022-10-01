@@ -10,7 +10,7 @@ class LoginController {
 
   LoginController({required this.repository});
 
-  isUserLoad(context) async {
+  isUserLoad() async {
     final a = await repository.isUserLoaded();
     return  a;
   }

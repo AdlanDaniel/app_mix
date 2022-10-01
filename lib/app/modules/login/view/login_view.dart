@@ -21,7 +21,7 @@ class _LoginViewState extends State<LoginView> {
   final keyForm = GlobalKey<FormState>();
 
   verificationUser() {
-    if (loginController.isUserLoad(context) != null) {
+    if (loginController.isUserLoad() != null) {
       Navigator.pushNamedAndRemoveUntil(context, Routes.home, (route) => false);
     }
   }

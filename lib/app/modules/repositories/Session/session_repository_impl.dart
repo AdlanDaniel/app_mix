@@ -1,5 +1,3 @@
-
-
 import 'package:app_mix/app/modules/repositories/Models/User_model.dart';
 import 'package:app_mix/app/modules/repositories/Session/session_repository.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -18,6 +16,9 @@ class SessionRepositoryImpl implements SessionRepository {
     try {
       await auth.signInWithEmailAndPassword(
           email: userModel.email!, password: userModel.password!);
+           User? dadosUsuario = await isUserLoaded();
+      print(dadosUsuario);
+
     } on FirebaseAuthException catch (error) {
       switch (error.code) {
         case 'user-not-found':
@@ -55,19 +56,23 @@ class SessionRepositoryImpl implements SessionRepository {
   @override
   Future<void> signOutUser() async {
     try {
+      User? dadosUsuario = await isUserLoaded();
+      print(dadosUsuario);
+
       await auth.signOut();
-    } catch (error) {
-      throw Exception();
+      User? dadosUsuario2 = await isUserLoaded();
+      print(dadosUsuario2);
+      
+    } on FirebaseAuthException catch (e) {
+      throw SignOutError();
     }
   }
 
   @override
-  Future<User?> isUserLoaded()async {
-    return auth.currentUser ;
-    }
-    
+  Future<User?> isUserLoaded() async {
+    return auth.currentUser;
   }
-
+}
 
 class UserNotFoundError implements Exception {}
 
@@ -76,5 +81,7 @@ class InvalidEmail implements Exception {}
 class UserDiseable implements Exception {}
 
 class WrongPassword implements Exception {}
+
+class SignOutError implements Exception {}
 
 class GenericError implements Exception {}
