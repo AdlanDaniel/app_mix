@@ -20,18 +20,48 @@ class _HomeViewState extends State<HomeView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Color(0xFF7C4DFF),
         actions: [
           IconButton(
-              onPressed: () {
-                homeController.signOutUser(context);
-                
-                Navigator.pushNamed(context, Routes.login);
+              onPressed: () async {
+                await homeController.signOutUser(context);
               },
               icon: Icon(Icons.logout))
         ],
         title: const Text('Home'),
       ),
-      body: Container(),
+      body: Container(
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              ElevatedButton(
+                  onPressed: () {
+                    Navigator.pushNamed(context, Routes.registerClients);
+                  },
+                  child: Text('Cadastrar Clientes'),
+                  style: ButtonStyle(
+                      backgroundColor: MaterialStateProperty.all(
+                    Color(0xFF7C4DFF),
+                  ))),
+              ElevatedButton(
+                  onPressed: () {},
+                  child: Text('Listar Clientes'),
+                  style: ButtonStyle(
+                      backgroundColor: MaterialStateProperty.all(
+                    Color(0xFF7C4DFF),
+                  ))),
+              ElevatedButton(
+                  onPressed: () {},
+                  child: Text('Editar Clientes'),
+                  style: ButtonStyle(
+                      backgroundColor: MaterialStateProperty.all(
+                    Color(0xFF7C4DFF),
+                  )))
+            ],
+          ),
+        ),
+      ),
     );
   }
 }

@@ -1,5 +1,6 @@
 import 'package:app_mix/app/modules/home/view/home_view.dart';
 import 'package:app_mix/app/modules/login/view/login_view.dart';
+import 'package:app_mix/app/modules/register_clients/view/register_clients_view.dart';
 import 'package:app_mix/app/modules/register_users/view/register_users_view.dart';
 import 'package:app_mix/app/modules/splash_screen/view/splash_screen_view.dart';
 import 'package:app_mix/app/routes/routes.dart';
@@ -26,7 +27,8 @@ class MyApp extends StatelessWidget {
         Routes.initial: (context) => SplashScreenView(),
         Routes.login: (context) => LoginView(),
         Routes.home: (context) => HomeView(),
-        Routes.registerUsers: (context) => RegisterUsersView()
+        Routes.registerUsers: (context) => RegisterUsersView(),
+        Routes.registerClients: ((context) => RegisterClientsView())
       },
     );
   }

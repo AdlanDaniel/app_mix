@@ -20,8 +20,9 @@ class _LoginViewState extends State<LoginView> {
   bool passworld = true;
   final keyForm = GlobalKey<FormState>();
 
-  verificationUser() {
-    if (loginController.isUserLoad() != null) {
+  verificationUser()async  {
+    var x = await loginController.isUserLoad();
+    if (x != null) {
       Navigator.pushNamedAndRemoveUntil(context, Routes.home, (route) => false);
     }
   }

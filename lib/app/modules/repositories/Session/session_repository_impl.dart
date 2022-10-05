@@ -1,3 +1,4 @@
+import 'package:app_mix/app/modules/repositories/Models/Clients_model.dart';
 import 'package:app_mix/app/modules/repositories/Models/User_model.dart';
 import 'package:app_mix/app/modules/repositories/Session/session_repository.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -16,9 +17,8 @@ class SessionRepositoryImpl implements SessionRepository {
     try {
       await auth.signInWithEmailAndPassword(
           email: userModel.email!, password: userModel.password!);
-           User? dadosUsuario = await isUserLoaded();
+      User? dadosUsuario = await isUserLoaded();
       print(dadosUsuario);
-
     } on FirebaseAuthException catch (error) {
       switch (error.code) {
         case 'user-not-found':
@@ -62,7 +62,6 @@ class SessionRepositoryImpl implements SessionRepository {
       await auth.signOut();
       User? dadosUsuario2 = await isUserLoaded();
       print(dadosUsuario2);
-      
     } on FirebaseAuthException catch (e) {
       throw SignOutError();
     }
@@ -71,6 +70,31 @@ class SessionRepositoryImpl implements SessionRepository {
   @override
   Future<User?> isUserLoaded() async {
     return auth.currentUser;
+  }
+
+  
+  @override
+  Future<void> registerClients(ClientsModel clientsModel) async {
+    try {
+      await db
+          .collection('Usuários')
+          .doc(auth.currentUser!.uid)
+          .collection('Clientes Cadastrados')
+          .doc(clientsModel.idClient)
+          .set(clientsModel.ToMap());
+    } catch (e) {
+      throw Exception();
+    }
+  }
+
+  @override
+  String getIdClients() {
+    try {
+      String idClients = db.collection('Clientes Cadastrados').doc().id;
+      return idClients;
+    } catch (e) {
+      throw Exception();
+    }
   }
 }
 
