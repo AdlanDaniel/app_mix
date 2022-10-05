@@ -234,10 +234,9 @@ class _RegisterUsersViewState extends State<RegisterUsersView> {
                                 MaterialStateProperty.all(Color(0xFF7C4DFF))),
                         child: Text('Cadastrar'),
                         onPressed: () {
-                          registerUserController.dialogSucess(context);
-                          // if (keyForm.currentState?.validate() ?? false) {
-                          //   registerUserController.registerDataUser(context);
-                          // }
+                          if (keyForm.currentState?.validate() ?? false) {
+                            registerUserController.registerDataUser(context);
+                          }
                         },
                       ),
                     ),
