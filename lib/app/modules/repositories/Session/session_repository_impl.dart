@@ -1,8 +1,13 @@
+import 'dart:convert';
+import 'dart:io';
+
 import 'package:app_mix/app/modules/repositories/Models/Clients_model.dart';
 import 'package:app_mix/app/modules/repositories/Models/User_model.dart';
+import 'package:app_mix/app/modules/repositories/Models/adress_client.dart';
 import 'package:app_mix/app/modules/repositories/Session/session_repository.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:http/http.dart' as http;
 
 class SessionRepositoryImpl implements SessionRepository {
   FirebaseAuth auth;
@@ -39,7 +44,7 @@ class SessionRepositoryImpl implements SessionRepository {
   }
 
   _dataUser(UserModel userModel) {
-    db.collection('Usuários').doc(auth.currentUser!.uid).set(userModel.toMap());
+    db.collection('usuários').doc(auth.currentUser!.uid).set(userModel.toMap());
   }
 
   @override
@@ -57,11 +62,9 @@ class SessionRepositoryImpl implements SessionRepository {
   Future<void> signOutUser() async {
     try {
       User? dadosUsuario = await isUserLoaded();
-      print(dadosUsuario);
 
       await auth.signOut();
       User? dadosUsuario2 = await isUserLoaded();
-      print(dadosUsuario2);
     } on FirebaseAuthException catch (e) {
       throw SignOutError();
     }
@@ -72,31 +75,61 @@ class SessionRepositoryImpl implements SessionRepository {
     return auth.currentUser;
   }
 
-  
   @override
   Future<void> registerClients(ClientsModel clientsModel) async {
     try {
       await db
-          .collection('Usuários')
+          .collection('usuários')
           .doc(auth.currentUser!.uid)
-          .collection('Clientes Cadastrados')
+          .collection('clientesCadastrados')
           .doc(clientsModel.idClient)
           .set(clientsModel.ToMap());
     } catch (e) {
-      throw Exception();
+      throw GenericError();
     }
   }
 
   @override
   String getIdClients() {
     try {
-      String idClients = db.collection('Clientes Cadastrados').doc().id;
+      String idClients = db.collection('clientesCadastrados').doc().id;
       return idClients;
     } catch (e) {
-      throw Exception();
+      throw GenericError();
+    }
+  }
+
+  @override
+  Future<AdressClient?> getAdressAPI(AdressClient adressClient) async {
+    try {
+      String? cepAPI = adressClient.cep;
+      Uri url = Uri.parse('https://viacep.com.br/ws/${cepAPI}/json/');
+      http.Response response;
+      response = await http.get(url);
+      // if (response.statusCode == 400) {
+      //   throw FormatException();
+      // }
+
+      Map<String, dynamic> mapCepApi = jsonDecode(response.body);
+
+      AdressClient adressClientAPI = AdressClient.fromMap(mapCepApi);
+
+      return adressClientAPI;
+
+      // print(mapCepApi);
+      // print(mapCepApi.runtimeType);
+
+      // print(adressClientAPI.bairro);
+
+    } on FormatException catch (_) {
+      throw CepImcomplete();
+    } catch (e) {
+      throw GenericError();
     }
   }
 }
+
+class CepImcomplete implements Exception {}
 
 class UserNotFoundError implements Exception {}
 

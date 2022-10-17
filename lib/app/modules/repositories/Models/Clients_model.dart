@@ -1,9 +1,12 @@
+import 'package:app_mix/app/modules/repositories/Models/adress_client.dart';
+
 class ClientsModel {
   String? nameClient;
   String? statusClient;
   String? birthClient;
   String? cepClient;
-  String? adressClient;
+  AdressClient? adressClient;
+
   String? idClient;
 
   ClientsModel(
@@ -15,21 +18,23 @@ class ClientsModel {
       this.idClient});
 
   ClientsModel.fromMap(Map<String, dynamic> map) {
-    nameClient = map['Nome'];
-    statusClient = map['Status'];
-    birthClient = map['Data de Nascimento'];
-    cepClient = map['CEP'];
-    adressClient = map['Endereco'];
+    nameClient = map['nome'];
+    statusClient = map['status'];
+    birthClient = map['dataNascimento'];
+    cepClient = map['cep'];
+    adressClient = AdressClient.fromMap(map);
+
     idClient = map['ID'];
   }
   Map<String, dynamic> ToMap() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['Nome'] = nameClient;
-    data['Status'] = statusClient;
-    data['Data de Nascimento'] = birthClient;
-    data['CEP'] = cepClient;
-    data['Endereco'] = adressClient;
-    data['ID'] = idClient;
+    data['nome'] = nameClient;
+    data['status'] = statusClient;
+    data['dataNascimento'] = birthClient;
+    data['cep'] = cepClient;
+    data['endereco'] = adressClient?.toMap();
+
+    data['id'] = idClient;
     return data;
   }
 }
