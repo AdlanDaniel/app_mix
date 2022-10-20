@@ -1,4 +1,6 @@
 import 'package:app_mix/app/modules/home/view/home_view.dart';
+import 'package:app_mix/app/modules/info_clients/view/info_clients_view.dart';
+import 'package:app_mix/app/modules/list_clients/view/list_clients_view.dart';
 import 'package:app_mix/app/modules/login/view/login_view.dart';
 import 'package:app_mix/app/modules/register_clients/view/register_clients_view.dart';
 import 'package:app_mix/app/modules/register_users/view/register_users_view.dart';
@@ -28,7 +30,9 @@ class MyApp extends StatelessWidget {
         Routes.login: (context) => LoginView(),
         Routes.home: (context) => HomeView(),
         Routes.registerUsers: (context) => RegisterUsersView(),
-        Routes.registerClients: ((context) => RegisterClientsView())
+        Routes.registerClients: ((context) => RegisterClientsView()),
+        Routes.listClients: (context) => ListClientsView(),
+        Routes.infoClients: (context) => InfoClientsView(),
       },
     );
   }

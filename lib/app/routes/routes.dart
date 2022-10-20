@@ -5,4 +5,6 @@ class Routes {
   static const home = '/home';
   static const registerUsers = '/register_users';
   static const registerClients = '/register_clients';
+  static const listClients = '/list_clients';
+  static const infoClients = '/info_clients';
 }
