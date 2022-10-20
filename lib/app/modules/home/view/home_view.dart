@@ -45,7 +45,9 @@ class _HomeViewState extends State<HomeView> {
                     Color(0xFF7C4DFF),
                   ))),
               ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.pushNamed(context, Routes.listClients);
+                  },
                   child: Text('Listar Clientes'),
                   style: ButtonStyle(
                       backgroundColor: MaterialStateProperty.all(

@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:app_mix/app/modules/repositories/Models/Clients_model.dart';
@@ -7,6 +8,7 @@ import 'package:app_mix/app/modules/repositories/Models/adress_client.dart';
 import 'package:app_mix/app/modules/repositories/Session/session_repository.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
 class SessionRepositoryImpl implements SessionRepository {
@@ -126,6 +128,38 @@ class SessionRepositoryImpl implements SessionRepository {
     } catch (e) {
       throw GenericError();
     }
+  }
+
+  @override
+  Stream<QuerySnapshot<Map<String, dynamic>>> streamClients() {
+    Stream<QuerySnapshot<Map<String, dynamic>>> querySnapshot = db
+        .collection('usuários')
+        .doc(auth.currentUser!.uid)
+        .collection('clientesCadastrados')
+        .snapshots();
+    return querySnapshot;
+  }
+
+  @override
+  Future getDocsClients() async {
+    try {
+      QuerySnapshot querySnapshot = await db
+          .collection('usuários')
+          .doc(auth.currentUser!.uid)
+          .collection('clientesCadastrados')
+          .get();
+      List<QueryDocumentSnapshot> queryDocumentSnapshot = querySnapshot.docs;
+      List<ClientsModel> listClients = [];
+      for (DocumentSnapshot item in queryDocumentSnapshot) {
+        var dados = item.data() as Map<String, dynamic>;
+        ClientsModel dadosClients = ClientsModel.fromMap(dados);
+        listClients.add(dadosClients);
+      }
+      
+    } catch (e) {
+      throw Exception();
+    }
+    ;
   }
 }
 
