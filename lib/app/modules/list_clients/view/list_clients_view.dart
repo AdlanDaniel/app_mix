@@ -24,14 +24,6 @@ class _ListClientsViewState extends State<ListClientsView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        actions: [
-          ElevatedButton(
-            child: Text('Teste do metodo'),
-            onPressed: () {
-              listClientsController.getDocsClients();
-            },
-          ),
-        ],
         title: const Text('Lista de Clientes'),
         backgroundColor: Color(0xFF7C4DFF),
       ),
@@ -60,26 +52,52 @@ class _ListClientsViewState extends State<ListClientsView> {
                     }
 
                     return GestureDetector(
+                      onLongPress: () {
+                        Navigator.pushNamed(context, Routes.editClient,
+                            arguments: listClients[i]);
+                      },
                       onTap: () {
                         Navigator.pushNamed(context, Routes.infoClients,
                             arguments: listClients[i]);
                       },
-                      child: Card(
-                        child: ListTile(
-                          title: Text(listClients[i].nameClient!),
-                          subtitle: Text(listClients[i].statusClient!),
-                          leading: CircleAvatar(
-                            child: Text(listClients[i]
-                                .nameClient!
-                                .characters
-                                .first
-                                .toUpperCase()),
-                            radius: 35,
-                            backgroundColor: Color(0xFF7C4DFF),
+                      child: Dismissible(
+                        onDismissed: (diretion) {
+                          if (diretion == DismissDirection.startToEnd) {
+                            listClientsController.deleteClients(
+                                context, listClients[i].idClient);
+                          }
+                        },
+                        direction: DismissDirection.startToEnd,
+                        background: Container(
+                          padding: EdgeInsets.only(left: 10),
+                          child: Row(
+                            children: [
+                              Icon(
+                                Icons.delete,
+                                color: Colors.white,
+                              )
+                            ],
                           ),
-                          trailing: Icon(
-                            Icons.arrow_forward_ios_outlined,
-                            size: 25,
+                          color: Colors.red,
+                        ),
+                        key: Key(listClients[i].nameClient ?? ''),
+                        child: Card(
+                          child: ListTile(
+                            title: Text(listClients[i].nameClient!),
+                            subtitle: Text(listClients[i].statusClient!),
+                            leading: CircleAvatar(
+                              child: Text(listClients[i]
+                                  .nameClient!
+                                  .characters
+                                  .first
+                                  .toUpperCase()),
+                              radius: 35,
+                              backgroundColor: Color(0xFF7C4DFF),
+                            ),
+                            trailing: Icon(
+                              Icons.arrow_forward_ios_outlined,
+                              size: 25,
+                            ),
                           ),
                         ),
                       ),

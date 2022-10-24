@@ -21,6 +21,7 @@ class RegisterClientsController {
   TextEditingController cidadeClientEC = TextEditingController();
   TextEditingController estadoClientEC = TextEditingController();
   TextEditingController complementoClientEC = TextEditingController();
+  
   List<String> itemsCidade = [
     '< Escolher Cidade >',
     'Teresina',

@@ -1,3 +1,4 @@
+import 'package:app_mix/app/modules/edit_clients/view/edit_clients_view.dart';
 import 'package:app_mix/app/modules/home/view/home_view.dart';
 import 'package:app_mix/app/modules/info_clients/view/info_clients_view.dart';
 import 'package:app_mix/app/modules/list_clients/view/list_clients_view.dart';
@@ -33,6 +34,7 @@ class MyApp extends StatelessWidget {
         Routes.registerClients: ((context) => RegisterClientsView()),
         Routes.listClients: (context) => ListClientsView(),
         Routes.infoClients: (context) => InfoClientsView(),
+        Routes.editClient: (context) => EditClientsView()
       },
     );
   }

@@ -141,23 +141,16 @@ class SessionRepositoryImpl implements SessionRepository {
   }
 
   @override
-  Future getDocsClients() async {
+  Future<void> deleteClients(String id) async {
     try {
-      QuerySnapshot querySnapshot = await db
+      db
           .collection('usuários')
           .doc(auth.currentUser!.uid)
           .collection('clientesCadastrados')
-          .get();
-      List<QueryDocumentSnapshot> queryDocumentSnapshot = querySnapshot.docs;
-      List<ClientsModel> listClients = [];
-      for (DocumentSnapshot item in queryDocumentSnapshot) {
-        var dados = item.data() as Map<String, dynamic>;
-        ClientsModel dadosClients = ClientsModel.fromMap(dados);
-        listClients.add(dadosClients);
-      }
-      
+          .doc(id)
+          .delete();
     } catch (e) {
-      throw Exception();
+      throw DeleteClientsError();
     }
     ;
   }
@@ -176,3 +169,5 @@ class WrongPassword implements Exception {}
 class SignOutError implements Exception {}
 
 class GenericError implements Exception {}
+
+class DeleteClientsError implements Exception {}
