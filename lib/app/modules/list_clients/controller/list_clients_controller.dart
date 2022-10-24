@@ -1,6 +1,7 @@
 import 'package:app_mix/app/modules/repositories/Session/session_repository.dart';
 import 'package:app_mix/app/modules/repositories/Session/session_repository_impl.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/material.dart';
 
 class ListClientsController {
   SessionRepository repository;
@@ -11,11 +12,20 @@ class ListClientsController {
     return repository.streamClients();
   }
 
-  getDocsClients() {
+  Future<void> deleteClients(context,idClient) async {
     try {
-      repository.getDocsClients();
-    } catch (e) {
-      throw Exception();
+      await repository.deleteClients(idClient);
+    } on DeleteClientsError {
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text('Erro ao deletar cliente')));
     }
   }
+
+  // getDocsClients() {
+  //   try {
+  //     repository.getDocsClients();
+  //   } catch (e) {
+  //     throw Exception();
+  //   }
+  // }
 }

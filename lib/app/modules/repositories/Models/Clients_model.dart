@@ -22,9 +22,9 @@ class ClientsModel {
     statusClient = map['status'];
     birthClient = map['dataNascimento'];
     cepClient = map['cep'];
-    adressClient = AdressClient.fromMap(map);
+    adressClient = AdressClient.fromMap(map['endereco']);
 
-    idClient = map['ID'];
+    idClient = map['id'];
   }
   Map<String, dynamic> ToMap() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
