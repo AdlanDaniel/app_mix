@@ -19,6 +19,7 @@ class _RegisterClientsViewState extends State<RegisterClientsView> {
       RegisterClientsController(sessionRepository: repository);
 
   final keyForm = GlobalKey<FormState>();
+  final keyDrop = GlobalKey<FormFieldState>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -63,39 +64,6 @@ class _RegisterClientsViewState extends State<RegisterClientsView> {
                         color: Color(0xFF7C4DFF),
                       )),
                     )),
-                // Padding(
-                //   padding: const EdgeInsets.only(top: 10.0),
-                //   child: TextFormField(
-                //       controller: registerClientsController.statusClientEC,
-                //       validator: ((value) {
-                //         if (value!.isEmpty) {
-                //           return 'Campo Obrigatório';
-                //         }
-                //         return null;
-                //       }),
-                //       decoration: InputDecoration(
-                //         labelText: 'Status',
-                //         labelStyle: TextStyle(
-                //           color: Color(0xFF7C4DFF),
-                //         ),
-                //         focusedErrorBorder: OutlineInputBorder(
-                //             borderSide:
-                //                 BorderSide(width: 2.5, color: Colors.red)),
-                //         errorBorder: OutlineInputBorder(
-                //             borderSide:
-                //                 BorderSide(width: 2.5, color: Colors.red)),
-                //         enabledBorder: OutlineInputBorder(
-                //             borderSide: BorderSide(
-                //           width: 2.5,
-                //           color: Color(0xFF7C4DFF),
-                //         )),
-                //         focusedBorder: OutlineInputBorder(
-                //             borderSide: BorderSide(
-                //           width: 2.5,
-                //           color: Color(0xFF7C4DFF),
-                //         )),
-                //       )),
-                // ),
                 Padding(
                   padding: const EdgeInsets.only(top: 10.0),
                   child: TextFormField(
@@ -330,6 +298,7 @@ class _RegisterClientsViewState extends State<RegisterClientsView> {
                 Padding(
                   padding: const EdgeInsets.only(top: 10.0),
                   child: DropdownButtonFormField(
+                    // key: keyDrop,
                     style: TextStyle(color: Color(0xFF7C4DFF)),
                     iconSize: 30,
                     decoration: InputDecoration(
@@ -368,73 +337,6 @@ class _RegisterClientsViewState extends State<RegisterClientsView> {
                     },
                   ),
                 ),
-                // Padding(
-                //   padding: const EdgeInsets.only(top: 10.0),
-                //   child: TextFormField(
-                //       controller: registerClientsController.cidadeClientEC,
-                //       validator: ((value) {
-                //         if (value!.isEmpty) {
-                //           return 'Campo Obrigatório';
-                //         }
-                //         return null;
-                //       }),
-                //       decoration: InputDecoration(
-                //         labelText: 'Cidade',
-                //         labelStyle: TextStyle(
-                //           color: Color(0xFF7C4DFF),
-                //         ),
-                //         focusedErrorBorder: OutlineInputBorder(
-                //             borderSide:
-                //                 BorderSide(width: 2.5, color: Colors.red)),
-                //         errorBorder: OutlineInputBorder(
-                //             borderSide:
-                //                 BorderSide(width: 2.5, color: Colors.red)),
-                //         enabledBorder: OutlineInputBorder(
-                //             borderSide: BorderSide(
-                //           width: 2.5,
-                //           color: Color(0xFF7C4DFF),
-                //         )),
-                //         focusedBorder: OutlineInputBorder(
-                //             borderSide: BorderSide(
-                //           width: 2.5,
-                //           color: Color(0xFF7C4DFF),
-                //         )),
-                //       )),
-                // ),
-                // Padding(
-                //   padding: const EdgeInsets.only(top: 10.0),
-                //   child: TextFormField(
-                //       controller: registerClientsController.estadoClientEC,
-                //       validator: ((value) {
-                //         if (value!.isEmpty) {
-                //           return 'Campo Obrigatório';
-                //         }
-                //         return null;
-                //       }),
-                //       decoration: InputDecoration(
-                //         labelText: 'UF',
-                //         labelStyle: TextStyle(
-                //           color: Color(0xFF7C4DFF),
-                //         ),
-                //         focusedErrorBorder: OutlineInputBorder(
-                //             borderSide:
-                //                 BorderSide(width: 2.5, color: Colors.red)),
-                //         errorBorder: OutlineInputBorder(
-                //             borderSide:
-                //                 BorderSide(width: 2.5, color: Colors.red)),
-                //         enabledBorder: OutlineInputBorder(
-                //             borderSide: BorderSide(
-                //           width: 2.5,
-                //           color: Color(0xFF7C4DFF),
-                //         )),
-                //         focusedBorder: OutlineInputBorder(
-                //             borderSide: BorderSide(
-                //           width: 2.5,
-                //           color: Color(0xFF7C4DFF),
-                //         )),
-                //       )),
-                // ),
-
                 Padding(
                   padding: const EdgeInsets.only(top: 30.0),
                   child: SizedBox(
@@ -448,6 +350,13 @@ class _RegisterClientsViewState extends State<RegisterClientsView> {
                         onPressed: () {
                           if (keyForm.currentState!.validate()) {
                             registerClientsController.registerClients(context);
+
+                            setState(() {
+                              registerClientsController.valueInicialCidade =
+                                  '< Escolher Cidade >';
+                              registerClientsController.valueInicialEstado =
+                                  '< Escolher Estado >';
+                            });
                           }
                         },
                         child: Text('Cadastrar')),

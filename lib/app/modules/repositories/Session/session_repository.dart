@@ -12,9 +12,9 @@ abstract class SessionRepository {
   Future<User?> isUserLoaded();
   Future<void> registerClients(ClientsModel clientsModel);
   String getIdClients();
- 
+  Future<void> editClients(String id, ClientsModel clientsModel);
+
   Future<AdressClient?> getAdressAPI(AdressClient adressClient);
   Stream<QuerySnapshot<Map<String, dynamic>>> streamClients();
   Future<void> deleteClients(String id);
-  
 }

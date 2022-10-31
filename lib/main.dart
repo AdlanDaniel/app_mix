@@ -5,6 +5,7 @@ import 'package:app_mix/app/modules/list_clients/view/list_clients_view.dart';
 import 'package:app_mix/app/modules/login/view/login_view.dart';
 import 'package:app_mix/app/modules/register_clients/view/register_clients_view.dart';
 import 'package:app_mix/app/modules/register_users/view/register_users_view.dart';
+import 'package:app_mix/app/modules/repositories/Models/Clients_model.dart';
 import 'package:app_mix/app/modules/splash_screen/view/splash_screen_view.dart';
 import 'package:app_mix/app/routes/routes.dart';
 
@@ -34,7 +35,17 @@ class MyApp extends StatelessWidget {
         Routes.registerClients: ((context) => RegisterClientsView()),
         Routes.listClients: (context) => ListClientsView(),
         Routes.infoClients: (context) => InfoClientsView(),
-        Routes.editClient: (context) => EditClientsView()
+        // Routes.editClient: (context) => EditClientsView()
+      },
+      onGenerateRoute: (settings) {
+        if (settings.name == Routes.editClient) {
+          final args = settings.arguments as ClientsModel;
+          return MaterialPageRoute(builder: (context) {
+            return EditClientsView(
+              clientsModel: args,
+            );
+          });
+        }
       },
     );
   }

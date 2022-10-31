@@ -21,7 +21,7 @@ class RegisterClientsController {
   TextEditingController cidadeClientEC = TextEditingController();
   TextEditingController estadoClientEC = TextEditingController();
   TextEditingController complementoClientEC = TextEditingController();
-  
+
   List<String> itemsCidade = [
     '< Escolher Cidade >',
     'Teresina',
@@ -69,6 +69,7 @@ class RegisterClientsController {
     complementoClientEC.clear();
     cidadeClientEC.clear();
     estadoClientEC.clear();
+    
   }
 
   dialogLoading(context) {
@@ -131,7 +132,9 @@ class RegisterClientsController {
 
     try {
       await sessionRepository.registerClients(clientsModel);
+
       clearFields();
+
       dialogSucess(context);
     } on GenericError {
       ScaffoldMessenger.of(context)

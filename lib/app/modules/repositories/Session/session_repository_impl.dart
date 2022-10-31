@@ -154,6 +154,16 @@ class SessionRepositoryImpl implements SessionRepository {
     }
     ;
   }
+
+  @override
+  Future<void> editClients(String id, ClientsModel clientsModel) async {
+    db
+        .collection('usuários')
+        .doc(auth.currentUser!.uid)
+        .collection('clientesCadastrados')
+        .doc(id)
+        .update(clientsModel.ToMap());
+  }
 }
 
 class CepImcomplete implements Exception {}
