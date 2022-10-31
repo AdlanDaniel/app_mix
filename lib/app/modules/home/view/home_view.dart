@@ -53,13 +53,6 @@ class _HomeViewState extends State<HomeView> {
                       backgroundColor: MaterialStateProperty.all(
                     Color(0xFF7C4DFF),
                   ))),
-              ElevatedButton(
-                  onPressed: () {},
-                  child: Text('Editar Clientes'),
-                  style: ButtonStyle(
-                      backgroundColor: MaterialStateProperty.all(
-                    Color(0xFF7C4DFF),
-                  )))
             ],
           ),
         ),
